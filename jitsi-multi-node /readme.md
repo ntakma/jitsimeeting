@@ -9,9 +9,9 @@ In this article, we assume you already have a server (Server A) with default Jit
 
 ## PART 1: Configuration Change to Server A 
 Let's SSH into server A, this machine has a default jitsi meet installation , and by default it also has one videobridge component. 
-Please note in this tutorial, the domain name <domainname> or <dnsname> is the domain of the main Jitsi server (Server A).
+Please note in this tutorial, the domain name **<domainname>** or **<dnsname>** is the domain of the main Jitsi server (Server A).
 ### Step 1: Add the JID of the VideoBridges 
-First , we need to allow all videobridges to be able to create their own pubsub nodes. Let's add the JIDs of the videobridge nodes to Prosody. In Prosody configuration /etc/prosody/conf.d/<dnsname>.cfg.lua, add the following line under authentication = ...
+First , we need to allow all videobridges to be able to create their own pubsub nodes. Let's add the JIDs of the videobridge nodes to Prosody. In Prosody configuration **/etc/prosody/conf.d/<dnsname>.cfg.lua** , add the following line under authentication = ...
 ```
   admins = {
     "jitsi-videobridge.<dnsname>",
@@ -20,7 +20,7 @@ First , we need to allow all videobridges to be able to create their own pubsub 
 
 ```
 
-In this tutorial we use the above two subdomains jitsi-videobridge and videobridge2 as dns for each videobridge node. In some Jitsi versions, jitsi-videobridge is the default domain name used by videobridge. videobridge2 is the domain we chose for the second videobridge node. After the change, your configuration file should look like below.
+In this tutorial we use the above two subdomains **jitsi-videobridge** and **videobridge2** as dns for each videobridge node. In some Jitsi versions, jitsi-videobridge is the default domain name used by videobridge. **videobridge2** is the domain we chose for the second videobridge node. After the change, your configuration file should look like below.
 
 ```
 VirtualHost "<dnsname>"
@@ -34,7 +34,7 @@ VirtualHost "<dnsname>"
 ```
 ### Step 2. Change configuration of default Videobridge node 
 
-Now, edit the videobridge configuration in /etc/jitsi/videobridge/config, and look for the configuration line JVB_OPTS="--apis=,", and change it to following.
+Now, edit the **videobridge** configuration in **/etc/jitsi/videobridge/config** , and look for the configuration line **JVB_OPTS="--apis=,"** , and change it to following.
 
 ```
 JVB_OPTS="--apis=rest,xmpp --subdomain=jitsi-videobridge"
@@ -43,7 +43,7 @@ JVB_HOST=<domainname>
 
 ### Step 3. Change Prosody to listen to public interface 
 
-Since we going to have lots of videobridge nodes connecting from outside the server box, we need to change Prosody to listen to the public network. Edit the prosody configuration /etc/prosody/prosody.cfg.lua to listen for public IP, add the following configuration under admin = { }
+Since we going to have lots of videobridge nodes connecting from outside the server box, we need to change Prosody to listen to the public network. Edit the prosody configuration **/etc/prosody/prosody.cfg.lua** to listen for public IP, add the following configuration under **admin = { }**
 
 ```
 component_ports = {5347}
